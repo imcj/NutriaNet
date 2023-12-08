@@ -6,6 +6,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     strategy:
       matrix:
         dotnet-version: [ '3.1.x', '6.0.x', '7.0.x', '8.0.x' ]
@@ -26,4 +37,4 @@ jobs:
       - name: Build
         run: dotnet build
       - name: Test with the dotnet CLI
-        run: dotnet test
+        run: dotnet test -e MySQL_HOST=127.0.0.1 -e MySQL_USER=root -e MySQL_PASSWORD=123456 -e MySQL_DATABASE=test
