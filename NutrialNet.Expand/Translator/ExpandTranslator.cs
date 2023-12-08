@@ -58,7 +58,7 @@ internal class ExpandTranslator
             return;
         }
 
-        builder.Name($"{expand.Key}Id").Type(ColumnType.Big);
+        builder.Name($"{expand.Key}Id").Type(ColumnType.BigInt);
     }
 
     public void ToText(ExpandColumn expand, ColumnBuilder builder)

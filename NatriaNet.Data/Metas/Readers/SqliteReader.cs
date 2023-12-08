@@ -40,7 +40,7 @@ public class SqliteReader
     {
         return type.ToLower() switch
         {
-            "integer" => ColumnType.Big,
+            "integer" => ColumnType.BigInt,
             "text" => ColumnType.Text,
             _ => throw new NotImplementedException()
         };

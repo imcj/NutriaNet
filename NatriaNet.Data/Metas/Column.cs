@@ -16,6 +16,8 @@ public class Column
 
     public bool Nullable { get; set; } = false;
 
+
+
     public Column(string name, ColumnType type, int length, bool primaryKey = false)
     {
         Name = name;
