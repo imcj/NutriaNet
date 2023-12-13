@@ -29,4 +29,27 @@ public class MySqlCommandText : ICommandText
 
         return builder.ToString();
     }
+
+    protected IEnumerable<string> CreateConstraints(CreateTableCommand command)
+    {
+        return command.Constraints.Select(CreateConstraint);
+    }
+
+    protected string CreateConstraint(Constraints.Constraint constraint)
+    {
+        var builder = new StringBuilder();
+
+
+        return builder.ToString();
+    }
+
+    protected string CreatePrimaryKeyConstraint()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected string CreateForeignKeyConstraint(ForeignKeyConstraint foreignKey)
+    {
+        throw new NotImplementedException();
+    }
 }

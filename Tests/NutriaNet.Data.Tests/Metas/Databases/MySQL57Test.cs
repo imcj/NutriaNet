@@ -65,4 +65,26 @@ public class MySQL57Test : IClassFixture<MySQLFixture>
         cmd.CommandText = text;
         await cmd.ExecuteNonQueryAsync();
     }
+
+
+    [Fact]
+    [MySqlTest]
+    public async Task TestCreateForeignKey()
+    {
+        var builder = CreateTableCommandBuilder
+            .Create("Person")
+            .Column(col => col.Name("Id").Type(ColumnType.Int).Length(2).PrimaryKey(true).Nullable(false).IsAutoIncrement(true))
+            .ForeignKeyConstraint(fk => fk.Name("FK_Wife").Columns("WifeId").Reference("Person").ReferenceColumns("Id"));
+
+        var command = builder.Build();
+        var text = command.ToCommandText(DatabaseProduct.MySql57);
+
+        using var connection = fixture.GetDbConnection();
+
+        await connection.OpenAsync();
+
+        using var cmd = connection.CreateCommand();
+        cmd.CommandText = text;
+        await cmd.ExecuteNonQueryAsync();
+    }
 }

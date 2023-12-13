@@ -1,5 +1,5 @@
 ﻿namespace NutriaNet.Data.Metas.Readers.MySql;
 
-internal class MySql57ReaderAssembler
+public class MySql57ReaderAssembler
 {
 }

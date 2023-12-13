@@ -8,7 +8,6 @@ public class CreateTableCommand : ICommand
 
     public ICollection<Column> Columns { get; set; } = new List<Column>();
 
-    public ICollection<Constraint> Constraints { get; set; } = new List<Constraint>();
+    public ICollection<Constraints.Constraint> Constraints { get; set; } = new List<Constraints.Constraint>();
 
-    //public ICollection<Primar>
 }

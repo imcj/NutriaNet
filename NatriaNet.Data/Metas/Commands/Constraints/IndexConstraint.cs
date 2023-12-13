@@ -1,4 +1,4 @@
-﻿namespace NutriaNet.Data.Metas;
+﻿namespace NutriaNet.Data.Metas.Commands.Constraints;
 
 public class IndexConstraint : Constraint
 {
@@ -6,15 +6,12 @@ public class IndexConstraint : Constraint
 
     public IEnumerable<string> Columns { get; set; } = new List<string>();
 
-    public string TableName { get; set; }
-
     public bool IsUnique { get; set; } = false;
 
-    public IndexConstraint(string? name, IEnumerable<string> columns, string tableName, bool isUnique)
+    public IndexConstraint(string? name, IEnumerable<string> columns, bool isUnique)
     {
         Name = name;
         Columns = columns;
-        TableName = tableName;
         IsUnique = isUnique;
     }
 }

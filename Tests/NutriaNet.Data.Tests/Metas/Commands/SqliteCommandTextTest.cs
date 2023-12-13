@@ -13,8 +13,8 @@ public class SqliteCommandTextTest
             .Column(col => col.Name("Id").Type(Data.Metas.ColumnType.Int))
             .Column(col => col.Name("Name").Type(Data.Metas.ColumnType.Varchar).Length(255))
             .Column(col => col.Name("FriendId").Type(Data.Metas.ColumnType.Int))
-            .ForeignKeyConstraint(fk => fk.Name("FK_Friend").Column("FriendId").Reference("Person", "Id"))
-            .Index(i => i.Name("Index_FriendId").TableName("Person").Column("Id"))
+            .ForeignKeyConstraint(fk => fk.Name("FK_Friend").Columns("FriendId").Reference("Person").ReferenceColumns("Id"))
+            .Index(i => i.Name("Index_FriendId").Column("Id"))
             .Build();
 
         var commandText = new SqliteCommandText();

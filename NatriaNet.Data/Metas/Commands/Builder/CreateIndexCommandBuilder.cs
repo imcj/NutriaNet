@@ -4,8 +4,6 @@ public class CreateIndexCommandBuilder
 {
     protected string? name;
 
-    protected string table;
-
     protected bool isUnique = false;
 
     protected List<string> columns = new List<string>();
@@ -18,12 +16,6 @@ public class CreateIndexCommandBuilder
     public CreateIndexCommandBuilder Name(string name)
     {
         this.name = name;
-        return this;
-    }
-
-    public CreateIndexCommandBuilder Table(string table)
-    {
-        this.table = table;
         return this;
     }
 
@@ -45,8 +37,8 @@ public class CreateIndexCommandBuilder
         return this;
     }
 
-    public IndexConstraint Build()
+    public Constraints.IndexConstraint Build()
     {
-        return new(name, columns, table, isUnique);
+        return new(name, columns, isUnique);
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IDatabaseReader
 {
-    Task TableAsync(string tableName);
+    Task<Table> TableAsync(string tableName);
 }

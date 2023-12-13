@@ -1,4 +1,5 @@
-﻿using NutriaNet.Data.Metas.Builders;
+﻿using ForeignKeyConstraintBuilder = NutriaNet.Data.Metas.Commands.Builder.ForeignKeyConstraintCommandBulder;
+using ColumnBuilder = NutriaNet.Data.Metas.Builders.ColumnBuilder;
 
 namespace NutriaNet.Data.Metas.Commands.Builder;
 
@@ -10,7 +11,7 @@ public class CreateTableCommandBuilder
 
     protected List<Column> columns = new();
 
-    protected List<Constraint> constraints = new();
+    protected List<Constraints.Constraint> constraints = new();
 
     public CreateTableCommandBuilder Name(string name)
     {
@@ -43,10 +44,10 @@ public class CreateTableCommandBuilder
         return this;
     }
 
-    public CreateTableCommandBuilder Index(Action<IndexConstraintBuilder> action)
+    public CreateTableCommandBuilder Index(Action<IndexConstraintCommandBuilder> action)
     {
 
-        var builder = IndexConstraintBuilder.Create();
+        var builder = IndexConstraintCommandBuilder.Create();
         action(builder);
         var index = builder.Build();
         constraints.Add(index);

@@ -41,21 +41,21 @@ public class SqliteCommandText : ICommandText
             _ => ""
         };
 
-    protected string CreateConstraints(IEnumerable<Constraint> constraints)
+    protected string CreateConstraints(IEnumerable<Constraints.Constraint> constraints)
     {
-        return string.Join("    ,\n", constraints.Where(c => c is ForeignKeyConstraint).Select(CreateConstraint));
+        return string.Join("    ,\n", constraints.Where(c => c is Constraints.ForeignKeyConstraint).Select(CreateConstraint));
     }
 
-    protected string CreateConstraint(Constraint constraint)
+    protected string CreateConstraint(Constraints.Constraint constraint)
     {
-        if (constraint is ForeignKeyConstraint fk)
+        if (constraint is Constraints.ForeignKeyConstraint fk)
         {
             return CreateForeignKeyConstraint(fk);
         }
         return "";
     }
 
-    protected string CreateForeignKeyConstraint(ForeignKeyConstraint constraint)
+    protected string CreateForeignKeyConstraint(Constraints.ForeignKeyConstraint constraint)
     {
         var builder = new StringBuilder();
         var padLeft = 4;
@@ -65,19 +65,20 @@ public class SqliteCommandText : ICommandText
             padLeft = 8;
         }
 
-        builder.Append(@$"{"".PadLeft(padLeft)}FOREIGN KEY ({string.Join(", ", constraint.Columns.Select(column => column.Name))})
-{"".PadLeft(padLeft)}REFERENCES {constraint.ReferenceTable.Name}({string.Join(", ", constraint.References.Select(column => column.Name))})");
+        builder.Append(@$"{"".PadLeft(padLeft)}FOREIGN KEY ({string.Join(", ", constraint.Columns)})
+{"".PadLeft(padLeft)}REFERENCES {constraint.Reference}({string.Join(", ", constraint.ReferenceColumns)})");
 
         return builder.ToString();
     }
 
     protected string CreateIndexes(CreateTableCommand command)
     {
-        return $"{string.Join("\n", command.Constraints.Where(c => c is IndexConstraint).Select(c => (IndexConstraint)c).Select(CreateIndex))}";
+        return $"{string.Join("\n", command.Constraints.Where(c => c is Constraints.IndexConstraint).Select(c => (Constraints.IndexConstraint)c).Select(CreateIndex))}";
     }
 
-    protected string CreateIndex(IndexConstraint index)
+    protected string CreateIndex(Constraints.IndexConstraint index)
     {
-        return $"CREATE INDEX {index.Name} ON {index.TableName}({string.Join(", ", index.Columns)});";
+        // TODO:
+        return $"CREATE INDEX {index.Name} ON #table#({string.Join(", ", index.Columns)});";
     }
 }
