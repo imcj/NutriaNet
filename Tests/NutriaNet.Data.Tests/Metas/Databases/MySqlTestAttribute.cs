@@ -14,7 +14,7 @@ internal class MySqlTestAttribute : BeforeAfterTestAttribute
 
         using var cmd = connection.CreateCommand();
         cmd.CommandText = @"DROP DATABASE IF EXISTS `test`;
-CREATE DATABASE test;";
+CREATE DATABASE IF NOT EXISTS test;";
 
         var a = cmd.ExecuteNonQuery();
         connection.Close();
